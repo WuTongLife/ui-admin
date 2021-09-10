@@ -1,0 +1,52 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "华文细黑", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+/*  谷歌、359、QQ浏览器————（ webkit 内核的浏览器 ） */
+/*定义滚动条宽高及背景，宽高分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+}
+
+/*定义滚动条的轨道，内阴影及圆角*/
+::-webkit-scrollbar-track {
+  background-color: rgba(12, 55, 72, 0);
+}
+
+/*定义滑块，内阴影及圆角*/
+::-webkit-scrollbar-thumb {
+  border-radius: 18px;
+  background-color: rgba(62, 191, 191, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(62, 191, 191, 0.2);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: rgba(62, 191, 191, 0.2);
+}
+
+// Select 样式
+.ant-select-multiple .ant-select-selection-item {
+  border-radius: 12px !important;
+  color: #edffff;
+  background-color: rgba(62, 191, 191, 0.8) !important;
+}
+.ant-select-item-option {
+  &-active:not(&-disabled),
+  &-selected:not(&-disabled) {
+    color: #edffff !important;
+    font-weight: 600;
+    background-color: rgba(62, 191, 191, 0.8) !important;
+  }
+}
