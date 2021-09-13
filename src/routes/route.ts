@@ -11,6 +11,7 @@ export interface IRouteConfig extends RouteConfig {
   hiddenInMenu?: boolean;
   isLayout?: boolean;
   icon?: RouteIconEnum;
+  format?: string;
 }
 
 const routesConfig: IRouteConfig[] = [
@@ -24,24 +25,28 @@ const routesConfig: IRouteConfig[] = [
         exact: true,
         component: import("@/pages/index"),
         title: "首页",
+        format: "menu.home",
         icon: RouteIconEnum.首页
       },
       {
         path: "/system",
         title: "系统管理",
         icon: RouteIconEnum.系统管理,
+        format: "menu.system",
         routes: [
           {
             path: "/system/menu",
             exact: true,
             component: import("@/pages/system/menu/index"),
-            title: "菜单管理"
+            title: "菜单管理",
+            format: "menu.menu"
           },
           {
             path: "/system/user",
             exact: true,
             component: import("@/pages/system/user/index"),
-            title: "用户管理"
+            title: "用户管理",
+            format: "menu.user"
           }
         ]
       },
@@ -49,6 +54,7 @@ const routesConfig: IRouteConfig[] = [
         path: "/component",
         exact: true,
         title: "组件",
+        format: "menu.component",
         component: import("@/pages/component")
       },
       {

@@ -12,6 +12,7 @@
     "classnames": "^2.3.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
+    "react-intl": "^5.20.10",
     "react-loadable": "^5.5.0",
     "react-redux": "^7.2.5",
     "react-router": "^5.2.0",

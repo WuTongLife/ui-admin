@@ -21,7 +21,6 @@ const SiderTitle = () => {
 };
 
 const BasicLayout: FC = ({ children, ...props }) => {
-  console.log(props);
   return (
     <Layout className={prefixCls}>
       <Sider className={`${prefixCls}-sider`}>
@@ -40,7 +39,6 @@ const BasicLayout: FC = ({ children, ...props }) => {
         <Content className={`${prefixCls}-content`}>
           <div style={{ padding: 20, overflowY: "auto" }}>{children}</div>
         </Content>
-        {/* <Footer>Footer</Footer> */}
       </Layout>
       <AffixMusic />
     </Layout>

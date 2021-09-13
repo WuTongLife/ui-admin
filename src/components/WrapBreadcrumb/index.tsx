@@ -3,11 +3,13 @@ import { Breadcrumb, Space, Spin } from "antd";
 import { useLocation, Link } from "react-router-dom";
 import routes, { IRouteConfig } from "@/routes/route";
 import "./index.less";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface IBreadcrumbData {
   href?: string;
   title?: React.ReactNode;
   disable?: boolean;
+  format?: string;
 }
 
 interface WrapBreadcrumbProps {
@@ -34,7 +36,8 @@ const WrapBreadcrumb: FC<WrapBreadcrumbProps> = ({ data, style }) => {
               title: routes[i].breadcrumbTitle || routes[i].title,
               href: routes[i].path,
               icon: routes[i].icon,
-              disable: routes[i].routes
+              disable: routes[i].routes,
+              format: routes[i].format
             });
           }
         }
@@ -45,22 +48,23 @@ const WrapBreadcrumb: FC<WrapBreadcrumbProps> = ({ data, style }) => {
 
   return (
     <Breadcrumb separator="">
-      {breadcrumbData.map((item, index) =>
-        index === 0 ? (
+      {breadcrumbData.map((item, index) => {
+        const title = item.format ? <FormattedMessage id={item.format} /> : item.title;
+        return index === 0 ? (
           <Fragment key={index}>
-            <Breadcrumb.Item>{item.title}</Breadcrumb.Item>
+            <Breadcrumb.Item>{title}</Breadcrumb.Item>
             {breadcrumbData.length > 1 && <Breadcrumb.Separator>:</Breadcrumb.Separator>}
           </Fragment>
         ) : (
-          <Fragment key={index}>
+          <Breadcrumb.Item key={index}>
             {item.href && !item.disable && item.href !== pathname ? (
-              <Link to={item.href}>{item.title}</Link>
+              <Link to={item.href}>{title}</Link>
             ) : (
-              <Space size={4}>{item.title}</Space>
+              <Space size={4}>{title}</Space>
             )}
-          </Fragment>
-        )
-      )}
+          </Breadcrumb.Item>
+        );
+      })}
     </Breadcrumb>
   );
 };

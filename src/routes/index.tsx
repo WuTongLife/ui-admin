@@ -10,12 +10,14 @@ const renderRoutes = (routes: IRouteConfig[]) => {
         <Route
           path={route.path}
           exact={route.exact}
-          key={index}
-          render={(props) => Parent && <Parent {...props}>{renderRoutes(route.routes!)}</Parent>}
+          key={route.path}
+          render={(props) =>
+            Parent ? <Parent {...props}>{renderRoutes(route.routes!)}</Parent> : renderRoutes(route.routes!)
+          }
         />
       );
     } else {
-      return <Route path={route.path} exact={route.exact} key={index} component={route.component} />;
+      return <Route path={route.path} exact={route.exact} key={route.path} component={route.component} />;
     }
   });
 };
@@ -24,7 +26,7 @@ const RouteIndex = () => {
   return (
     <Router>
       <Switch>
-        {/* <Redirect path="/" exact to="/home" /> */}
+        <Redirect path="/" exact to="/home" />
         {renderRoutes(routes)}
       </Switch>
     </Router>

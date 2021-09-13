@@ -4,6 +4,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { HomeOutlined, SettingOutlined } from "@ant-design/icons";
 import routes, { IRouteConfig } from "@/routes/route";
 import { RouteIconEnum } from "@/routes/icon";
+import { FormattedMessage } from "react-intl";
 
 const { SubMenu } = Menu;
 
@@ -62,12 +63,13 @@ const SiderMenu = () => {
         if (childData && childData.length === 0) {
           return null;
         }
+        const title = item.format ? <FormattedMessage id={item.format} defaultMessage={item.title} /> : item.title;
         return !childData ? (
           <Menu.Item key={item.path} icon={item.icon ? icon[item.icon] : null}>
-            <NavLink to={item.path}>{item.title}</NavLink>
+            <NavLink to={item.path}>{title}</NavLink>
           </Menu.Item>
         ) : (
-          <SubMenu key={item.path} icon={item.icon ? icon[item.icon] : null} title={item.title}>
+          <SubMenu key={item.path} icon={item.icon ? icon[item.icon] : null} title={title}>
             {renderMenu(childData)}
           </SubMenu>
         );
