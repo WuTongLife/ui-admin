@@ -1,0 +1,45 @@
+@prefixCls: upload-view-item;
+
+.@{prefixCls} {
+  display: flex;
+  margin: 12px 0px;
+  border: 1px solid @border-color-base;
+  height: 60px;
+  cursor: pointer;
+  > div:first-child {
+    span:first-child {
+      font-size: 44px;
+      margin-right: 12px;
+      padding: 8px;
+    }
+  }
+  > div {
+    &:last-child {
+      padding: 8px 8px 8px 0px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+  &-name {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-operate {
+    .anticon {
+      cursor: pointer;
+      &:hover {
+        color: @primary-color;
+      }
+    }
+  }
+  &:last-child {
+    margin: 0px;
+  }
+}
+.@{prefixCls}-exception {
+  border: 1px solid rgb(255, 77, 79);
+  color: rgb(255, 77, 79);
+}

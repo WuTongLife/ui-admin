@@ -1,0 +1,24 @@
+@prefixCls: table-filter;
+
+.@{prefixCls}{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px;
+  &-search {
+    width: 550px !important;
+    border-radius: 12px !important;
+    .ant-input {
+      padding: 6px 11px !important;
+      border-radius: 6px 0px 0px 6px;
+    }
+    .ant-input-search-button{
+      height: 36px;
+    }
+    .ant-input-group-addon,.ant-btn-icon-only {
+      width: 36px;
+      border-radius: 0px 6px 6px 0px !important;
+    }
+  }
+}
