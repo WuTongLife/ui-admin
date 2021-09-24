@@ -56,7 +56,7 @@ export default defineConfig({
           "@input-bg": "rgba(0,0,0,0)",
           "@menu-item-height": "48px",
           "@menu-inline-toplevel-item-height": "48px",
-          "@table-header-bg": "linear-gradient(to right, #263B46, #1F4556)",
+          "@table-header-bg": "rgba(100,125,139,0.2)",
           "@table-row-hover-bg": "rgba(0,0,0,0)",
           "@table-padding-vertical": "12px",
           "@table-padding-horizontal": "12px",
@@ -79,7 +79,7 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "http://localhost:3000",
-        changeOrigin: true,
+        changeOrigin: true
         // rewrite: (path) => path.replace(/^\/api/, "")
       }
     }

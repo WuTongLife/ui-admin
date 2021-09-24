@@ -5,7 +5,7 @@ export default (loader: Promise<any>) => {
   return Loadable({
     loader: () => loader.then((d) => d.default),
     delay: 300,
-    timeout: 10000,
+    timeout: 60000,
     loading: PageLoading
   });
 };

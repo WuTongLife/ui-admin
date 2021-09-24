@@ -1,3 +1,4 @@
+import { message, notification } from "antd";
 import { extend, ResponseError } from "umi-request";
 
 const codeMessage: { [key in number]: string } = {
@@ -22,15 +23,16 @@ const codeMessage: { [key in number]: string } = {
  * 异常处理程序
  */
 const errorHandler = (error: ResponseError) => {
-  const { response } = error;
-  let errortext = codeMessage[response.status] || response.statusText;
-  const { status } = response;
-  if (status === 400 && !window.sessionStorage.getItem("token")) {
-    errortext = "账户名或密码错误";
+  let errorInfo = JSON.parse(JSON.stringify(error));
+  if (errorInfo.type === "Timeout") {
+    notification.error({
+      message: `请求超时`
+    });
+  } else {
+    notification.error({
+      message: errorInfo.type
+    });
   }
-  if (status === 401) {
-  }
-  return error;
 };
 
 /**
@@ -44,6 +46,14 @@ const request = extend({
 
 // request拦截器, 改变url 或 options.
 request.interceptors.request.use((url, options) => {
+  console.log(options);
+  options = {
+    ...options,
+    headers: {
+      Authorization: localStorage.getItem("token") || "",
+      ...options.headers
+    }
+  };
   return {
     url,
     options: {
@@ -54,6 +64,10 @@ request.interceptors.request.use((url, options) => {
 
 // response拦截器, 处理response
 request.interceptors.response.use(async (response) => {
+  const data = await response.clone().json();
+  if (data?.code !== 200 && data?.msg) {
+    message.error(data?.msg);
+  }
   return response;
 });
 

@@ -5,12 +5,14 @@ import { HomeOutlined, SettingOutlined } from "@ant-design/icons";
 import routes, { IRouteConfig } from "@/routes/route";
 import { RouteIconEnum } from "@/routes/icon";
 import { FormattedMessage } from "react-intl";
+import IconFont from "../IconFont";
 
 const { SubMenu } = Menu;
 
 export const icon = {
   [RouteIconEnum.首页]: <HomeOutlined />,
-  [RouteIconEnum.系统管理]: <SettingOutlined />
+  [RouteIconEnum.系统管理]: <SettingOutlined />,
+  [RouteIconEnum.博客管理]: <IconFont type="icon-boke" />
 };
 
 const SiderMenu = () => {

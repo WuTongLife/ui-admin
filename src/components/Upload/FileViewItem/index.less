@@ -15,6 +15,7 @@
   }
   > div {
     &:last-child {
+      overflow: hidden;
       padding: 8px 8px 8px 0px;
       flex: 1;
       display: flex;
@@ -24,7 +25,19 @@
   }
   &-name {
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    & > span:first-child {
+      display: block;
+      word-break: break-all;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .anticon:hover {
+      cursor: pointer;
+      color: @primary-color;
+    }
   }
 
   &-operate {
@@ -35,11 +48,15 @@
       }
     }
   }
-  &:last-child {
+  &:last-child:not(:first-child) {
     margin: 0px;
   }
 }
 .@{prefixCls}-exception {
   border: 1px solid rgb(255, 77, 79);
   color: rgb(255, 77, 79);
+}
+.@{prefixCls}-active {
+  border: 1px solid #62b2ff;
+  color: #62b2ff;
 }

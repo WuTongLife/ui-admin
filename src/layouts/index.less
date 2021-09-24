@@ -13,21 +13,54 @@
       display: flex;
       align-items: center;
       padding: 24px;
+      > span:first-child {
+        flex: 0 0 32px;
+        display: block;
+        width: 100%;
+      }
     }
+    &-title-collapsed {
+      > span:last-child {
+        width: 0px;
+        overflow: hidden;
+      }
+    }
+    // 退出登录
     &-logout {
       position: absolute;
-      display: block;
-      width: 100%;
+      display: flex;
+      align-items: center;
       cursor: pointer;
       bottom: 24px;
-      left: 24px;
+      padding-left: 24px;
+      left: 0;
+      margin-left: 0;
+      border-right: 0;
+      width: 100%;
+      transition: padding 0.1s cubic-bezier(0.215, 0.61, 0.355, 1);
       .anticon-logout {
         margin-right: 10px;
+      }
+      > span:last-child {
+        display: block;
+        width: 100%;
+        transition: width 0.3s cubic-bezier(0.2, 0, 0, 1) 0s;
       }
       &:hover {
         color: @primary-color;
       }
     }
+    // 收缩状态的退出登录
+    &-logout-collapsed {
+      width: 100%;
+      padding: 0 calc(50% - 16px / 2);
+      transition: padding 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+      > span:last-child {
+        width: 0px;
+        overflow: hidden;
+      }
+    }
+
     .ant-avatar {
       margin-right: 12px;
     }
@@ -62,14 +95,14 @@
     }
   }
   .ant-layout-sider {
-    background-color: #1B2B36;
+    background-color: #1b2b36;
     .ant-menu-item-selected {
-      background-color: #1B2B36;
+      background-color: #1b2b36;
     }
   }
   .ant-menu-item {
     &:active {
-      background: #1B2B36;
+      background: #1b2b36;
     }
     &::after {
       border-right: 5px solid #3ebfbf;
@@ -81,7 +114,7 @@
   }
 
   .ant-menu-submenu-title:active {
-    background: #1B2B36;
+    background: #1b2b36;
   }
 
   .ant-menu-inline,

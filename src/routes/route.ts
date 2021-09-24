@@ -16,6 +16,12 @@ export interface IRouteConfig extends RouteConfig {
 
 const routesConfig: IRouteConfig[] = [
   {
+    path: "/blog/editor",
+    exact: true,
+    hiddenInMenu: true,
+    component: import("@/pages/blogManage/blog/editor")
+  },
+  {
     path: "/",
     component: import("@/layouts/index"),
     isLayout: true,
@@ -27,6 +33,26 @@ const routesConfig: IRouteConfig[] = [
         title: "首页",
         format: "menu.home",
         icon: RouteIconEnum.首页
+      },
+      {
+        path: "/blog",
+        title: "博客管理",
+        icon: RouteIconEnum.博客管理,
+        format: "menu.blog",
+        routes: [
+          {
+            path: "/blog/index",
+            exact: true,
+            component: import("@/pages/blogManage/blog/index"),
+            format: "menu.blog.blog"
+          },
+          {
+            path: "/blog/label",
+            exact: true,
+            component: import("@/pages/blogManage/blogLabel/index"),
+            format: "menu.blog.label"
+          }
+        ]
       },
       {
         path: "/system",
@@ -54,6 +80,7 @@ const routesConfig: IRouteConfig[] = [
         path: "/component",
         exact: true,
         title: "组件",
+        icon: RouteIconEnum.系统管理,
         format: "menu.component",
         component: import("@/pages/component")
       },
