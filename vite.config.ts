@@ -20,7 +20,8 @@ export default defineConfig({
     // myPlugin()
   ],
   define: {
-    __CONST_DEFINE__: "0" // window.__CONST_DEFINE__
+    __CONST_DEFINE__: "0", // window.__CONST_DEFINE__
+    "process.env.NODE_DEBUG": undefined
   },
   // base: "http://qk.qqcywzc.cn/", // index.html引用其他js,css的公共基础路径
   build: {

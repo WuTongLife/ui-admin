@@ -7,7 +7,11 @@ import IconFont from "../IconFont";
 
 const prefixCls = "avatar-header";
 
-const AvatarHeader = () => {
+interface IAvatarHeaderProps {
+  currentUser: Store.InitStateValue["currentUser"];
+}
+
+const AvatarHeader = ({ currentUser }: IAvatarHeaderProps) => {
   const { changeLang, lang } = useContext(SettingContext);
 
   const onClickLang = () => {
@@ -23,7 +27,7 @@ const AvatarHeader = () => {
         <IconFont type={`icon-lang_${lang}`} />
       </span>
       <Avatar style={{ backgroundColor: "#9CD8EF" }} size={40} />
-      <span>Admin</span>
+      <span>{currentUser?.nickname}</span>
     </Space>
   );
 };

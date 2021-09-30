@@ -22,6 +22,12 @@ const routesConfig: IRouteConfig[] = [
     component: import("@/pages/blogManage/blog/editor")
   },
   {
+    path: "/login",
+    exact: true,
+    hiddenInMenu: true,
+    component: import("@/pages/login")
+  },
+  {
     path: "/",
     component: import("@/layouts/index"),
     isLayout: true,

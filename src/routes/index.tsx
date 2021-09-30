@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import routes, { IRouteConfig } from "./route";
-import Editor from "@/pages/blogManage/blog/editor";
 
 const renderRoutes = (routes: IRouteConfig[]) => {
   return routes.map((route, index) => {

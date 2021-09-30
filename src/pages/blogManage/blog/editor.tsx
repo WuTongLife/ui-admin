@@ -77,6 +77,7 @@ const Index = (props: any) => {
           </Button>
           <Tooltip
             placement="bottom"
+            overlayInnerStyle={{ backgroundColor: "#474545" }}
             title={
               <div className={`${prefixCls}-header-right-upload`}>
                 {params.article_cover_img ? (

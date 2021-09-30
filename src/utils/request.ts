@@ -1,5 +1,6 @@
 import { message, notification } from "antd";
 import { extend, ResponseError } from "umi-request";
+import { useHistory } from "react-router-dom";
 
 const codeMessage: { [key in number]: string } = {
   200: "服务器成功返回请求的数据。",
@@ -29,9 +30,9 @@ const errorHandler = (error: ResponseError) => {
       message: `请求超时`
     });
   } else {
-    notification.error({
-      message: errorInfo.type
-    });
+    // notification.error({
+    //   message: errorInfo.type
+    // });
   }
 };
 
@@ -46,7 +47,6 @@ const request = extend({
 
 // request拦截器, 改变url 或 options.
 request.interceptors.request.use((url, options) => {
-  console.log(options);
   options = {
     ...options,
     headers: {
@@ -65,8 +65,14 @@ request.interceptors.request.use((url, options) => {
 // response拦截器, 处理response
 request.interceptors.response.use(async (response) => {
   const data = await response.clone().json();
+
   if (data?.code !== 200 && data?.msg) {
     message.error(data?.msg);
+  }
+  if (response.status === 401) {
+    localStorage.removeItem("token");
+    const history = useHistory();
+    history.push("/login");
   }
   return response;
 });

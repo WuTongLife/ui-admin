@@ -1,5 +1,8 @@
 declare namespace Entity {
-  interface User {}
+  interface User {
+    nickname?: string;
+    username?: string;
+  }
 
   interface Article {
     article_id: number;

@@ -28,14 +28,7 @@ import "codemirror/addon/hint/css-hint";
 import "codemirror/addon/hint/show-hint.css";
 
 import { UnControlled as CodeMirror } from "react-codemirror2";
-import marked from "marked";
-import hljs from "highlight.js";
-import classnames from "classnames";
-import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vs } from "react-syntax-highlighter/dist/esm/styles/prism";
-import remarkGfm from "remark-gfm";
-import "highlight.js/styles/atom-one-dark.css";
+import classNames from "classnames";
 import styles from "./index.module.less";
 
 import {
@@ -61,6 +54,12 @@ import { useDebounceFn, useFullscreen } from "ahooks";
 import TableTool from "./components/TableTool";
 import LinkOutLinedTool from "./components/LinkOutLinedTool";
 import PictureTool from "./components/PictureTool";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import remarkGfm from "remark-gfm";
+import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import "./preview.less";
 
 interface IMarkdownEditorProps {
   theme?: "default" | "pastel-on-dark";
@@ -74,30 +73,15 @@ const MarkdownEditor = forwardRef(({ theme = "default", fullScreen, content }: I
   const [isFullscreen, { toggleFull }] = useFullscreen(document.documentElement);
   const editorOnChange = useDebounceFn(
     (editor, data, value) => {
-      setMarkHtml(marked(value));
+      setMarkHtml(value);
       localStorage.setItem("marked", value);
     },
     { wait: 100 }
   );
 
   useEffect(() => {
-    setMarkHtml(marked(content));
+    setMarkHtml(content);
   }, [content]);
-
-  useEffect(() => {
-    marked.setOptions({
-      renderer: new marked.Renderer(),
-      gfm: true,
-      breaks: true,
-      pedantic: false,
-      sanitize: false,
-      smartLists: true,
-      smartypants: false,
-      highlight: function (code) {
-        return hljs.highlightAuto(code).value;
-      }
-    });
-  }, []);
 
   useImperativeHandle(ref, () => ({
     editor: mirrorRef.current.editor
@@ -112,7 +96,7 @@ const MarkdownEditor = forwardRef(({ theme = "default", fullScreen, content }: I
 
   return (
     <div
-      className={classnames({
+      className={classNames({
         [styles["editor-default"]]: theme === "default",
         [styles["editor-pastel-on-dark"]]: theme === "pastel-on-dark",
         [styles["editor-fullscreen"]]: options.fullScreen || fullScreen,
@@ -158,7 +142,7 @@ const MarkdownEditor = forwardRef(({ theme = "default", fullScreen, content }: I
             () => (
               <CodeMirror
                 ref={mirrorRef}
-                // className={styles["editor-code"]}
+                className={styles["editor-code"]}
                 value={content}
                 options={{
                   theme,
@@ -174,35 +158,59 @@ const MarkdownEditor = forwardRef(({ theme = "default", fullScreen, content }: I
             [content]
           )}
         </div>
-        {/* <ReactMarkdown
-          className="markdown-body"
-          children={markHtml}
-          remarkPlugins={[remarkGfm]}
-          components={{
-            code({ node, inline, className, children, ref, ...props }) {
-              const match = /language-(\w+)/.exec(className || "");
-              return !inline && match ? (
-                <SyntaxHighlighter
-                  children={String(children).replace(/\n$/, "")}
-                  style={vs}
-                  language={match[1]}
-                  PreTag="div"
-                  {...props}
-                />
-              ) : (
-                <code className={className} {...props}>
-                  {children}
-                </code>
-              );
-            }
-          }}
-        /> */}
-        <div
-          className={styles["html-detail"]}
-          dangerouslySetInnerHTML={{
-            __html: markHtml
-          }}
-        />
+        <div className="markdowm-html">
+          <ReactMarkdown
+            className="write"
+            children={markHtml}
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeRaw]}
+            components={{
+              code({ node, inline, className, children, ref, ...props }) {
+                const match = /language-(\w+)/.exec(className || "");
+                return !inline && match ? (
+                  <SyntaxHighlighter
+                    children={String(children).replace(/\n$/, "")}
+                    style={atomDark}
+                    language={match[1]}
+                    PreTag="div"
+                    {...props}
+                  />
+                ) : (
+                  <code className={className} {...props}>
+                    {children}
+                  </code>
+                );
+              },
+              ul({ node, className, children, ref, ...props }) {
+                return (
+                  <ul className={classNames(className, { "ul-list": className === "contains-task-list" })} {...props}>
+                    {children}
+                  </ul>
+                );
+              },
+              li({ node, className, children, ref, ...props }) {
+                let checked = false;
+                React.Children.forEach(children, (d) => {
+                  if (React.isValidElement(d) && d.type === "input") {
+                    checked = d.props.checked;
+                  }
+                });
+                return (
+                  <li
+                    className={classNames(className, {
+                      "md-task-list-item task-list-done": className === "task-list-item",
+                      "task-list-done": checked,
+                      "task-list-not-done": !checked
+                    })}
+                    {...props}
+                  >
+                    {children}
+                  </li>
+                );
+              }
+            }}
+          />
+        </div>
       </div>
     </div>
   );
